@@ -1,1 +1,1 @@
-FROM vicamo/debian:stable-i386
+FROM vicamo/buildpack-deps:stretch-i386

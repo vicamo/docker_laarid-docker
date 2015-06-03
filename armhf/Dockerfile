@@ -1,1 +1,1 @@
-FROM vicamo/debian:stable-armhf
+FROM vicamo/buildpack-deps:stretch-armhf

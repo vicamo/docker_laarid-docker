@@ -1,1 +1,1 @@
-FROM vicamo/debian:stable-powerpc
+FROM vicamo/buildpack-deps:stretch-powerpc

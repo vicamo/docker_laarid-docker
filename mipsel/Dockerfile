@@ -1,1 +1,1 @@
-FROM vicamo/debian:stable-mipsel
+FROM vicamo/buildpack-deps:stretch-mipsel

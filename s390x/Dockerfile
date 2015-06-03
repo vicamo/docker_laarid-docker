@@ -1,1 +1,1 @@
-FROM vicamo/debian:stable-s390x
+FROM vicamo/buildpack-deps:stretch-s390x

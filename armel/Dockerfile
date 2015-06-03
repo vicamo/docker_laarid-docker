@@ -1,1 +1,1 @@
-FROM vicamo/debian:stable-armel
+FROM vicamo/buildpack-deps:stretch-armel

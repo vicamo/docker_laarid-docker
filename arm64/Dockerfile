@@ -1,1 +1,1 @@
-FROM vicamo/debian:stable-arm64
+FROM vicamo/buildpack-deps:stretch-arm64

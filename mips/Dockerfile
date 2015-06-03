@@ -1,1 +1,1 @@
-FROM vicamo/debian:stable-mips
+FROM vicamo/buildpack-deps:stretch-mips
