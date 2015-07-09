@@ -8,6 +8,7 @@ RUN apt-get update \
 		devscripts \
 		dh-autoreconf \
 		equivs \
+		libfile-fcntllock-perl \
 		lintian \
 	&& (echo "deb https://dl.bintray.com/laarid/main stretch main" | tee /etc/apt/sources.list.d/bintray.list) \
 	&& apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 379CE192D401AB61 \

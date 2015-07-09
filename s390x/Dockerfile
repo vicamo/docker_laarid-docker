@@ -8,6 +8,7 @@ RUN apt-get update \
 		devscripts \
 		dh-autoreconf \
 		equivs \
+		libfile-fcntllock-perl \
 		lintian \
 	&& apt-get clean \
 	&& rm -f /var/lib/apt/lists/*_dists_*
