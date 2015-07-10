@@ -3,6 +3,7 @@ FROM vicamo/buildpack-deps:stretch-armel
 RUN apt-get update \
 	&& apt-get install --no-install-recommends -y --force-yes \
 		apt-transport-https \
+		autoconf-archive \
 		autopoint \
 		ccache \
 		devscripts \
