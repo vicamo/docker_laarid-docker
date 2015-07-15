@@ -1,0 +1,11 @@
+#!/bin/bash
+
+arch=$(echo $0 | cut -d- -f2)
+
+su -l ${GITLAB_CI_USER} -p -c \
+  "${GITLAB_CI_RUNNER_PATH} register
+  --config ${GITLAB_CI_CONFIG}
+  --non-interactive
+  --url https://ci.gitlab.com/
+  --executor docker
+  --docker-image laarid/devel:${arch}"
