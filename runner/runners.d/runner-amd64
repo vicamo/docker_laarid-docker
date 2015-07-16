@@ -6,6 +6,7 @@ su -l ${GITLAB_CI_USER} -p -c \
   "${GITLAB_CI_RUNNER_PATH} register
   --config ${GITLAB_CI_CONFIG}
   --non-interactive
-  --url https://ci.gitlab.com/
+  --description \"GitLab CI runner for ${arch}\"
   --executor docker
-  --docker-image laarid/devel:${arch}"
+  --docker-image laarid/devel:${arch}
+  $@"
