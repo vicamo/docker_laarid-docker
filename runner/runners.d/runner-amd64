@@ -4,4 +4,4 @@ set -e
 
 arch=$(basename $0 | cut -d- -f2)
 
-exec su -p -c "${GITLAB_CI_RUNNER_PATH} register --config ${GITLAB_CI_CONFIG} --non-interactive --description \"GitLab CI runner for ${arch}\" --executor docker --docker-image laarid/devel:${arch} $*" ${GITLAB_CI_USER}
+exec su -p -c "${GITLAB_CI_RUNNER_PATH} register --config ${GITLAB_CI_CONFIG} --non-interactive --description \"GitLab CI runner for ${arch}\" --tag-list ${arch} --executor docker --docker-image laarid/devel:${arch} $*" ${GITLAB_CI_USER}
