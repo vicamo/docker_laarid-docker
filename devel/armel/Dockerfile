@@ -1,5 +1,8 @@
 FROM vicamo/buildpack-deps:stretch-armel
 
+ENV LAARID_USER=laarid
+ENV LAARID_HOME=/home/${LAARID_USER}
+
 RUN apt-get update \
 	&& apt-get install --no-install-recommends -y --force-yes \
 		apt-transport-https \
@@ -11,6 +14,7 @@ RUN apt-get update \
 		equivs \
 		libfile-fcntllock-perl \
 		lintian \
+		sudo \
 	&& apt-get clean \
 	&& rm -f /var/lib/apt/lists/*_dists_*
 
@@ -22,3 +26,14 @@ RUN apt-get update \
 #	&& apt-get update \
 #	&& apt-get install --no-install-recommends -y --force-yes \
 #		libbionic0-dev \
+
+RUN useradd --comment 'LAARiD Development Account' \
+		--home ${LAARID_HOME} --create-home \
+		--shell /bin/bash \
+		${LAARID_USER} \
+	&& (echo "${LAARID_USER}:laarid" | chpasswd) \
+	&& adduser ${LAARID_USER} sudo
+
+VOLUME ["${LAARID_HOME}"]
+WORKDIR ${LAARID_HOME}
+USER ${LAARID_USER}
