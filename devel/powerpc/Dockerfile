@@ -32,7 +32,9 @@ RUN useradd --comment 'LAARiD Development Account' \
 		--shell /bin/bash \
 		${LAARID_USER} \
 	&& (echo "${LAARID_USER}:laarid" | chpasswd) \
-	&& adduser ${LAARID_USER} sudo
+	&& adduser ${LAARID_USER} sudo \
+	&& (echo "${LAARID_USER} ALL=NOPASSWD: ALL" > /etc/sudoers.d/laarid) \
+	&& chmod 0440 /etc/sudoers.d/laarid
 
 VOLUME ["${LAARID_HOME}"]
 WORKDIR ${LAARID_HOME}
