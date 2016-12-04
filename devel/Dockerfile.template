@@ -1,5 +1,5 @@
 # DO NOT EDIT!!! GENERATED FROM Dockerfile.template.
-FROM vicamo/buildpack-deps:stretch-mipsel
+FROM vicamo/buildpack-deps:@IMAGE_SUITE@-@IMAGE_ARCH@
 
 ENV LAARID_USER=laarid
 ENV LAARID_HOME=/home/${LAARID_USER}
@@ -16,7 +16,7 @@ RUN apt-get update \
 		libfile-fcntllock-perl \
 		lintian \
 		sudo \
-	&& (echo "deb https://dl.bintray.com/laarid/main stretch main" | tee /etc/apt/sources.list.d/bintray.list) \
+	&& (echo "deb https://dl.bintray.com/laarid/main @IMAGE_SUITE@ main" | tee /etc/apt/sources.list.d/bintray.list) \
 	&& apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 379CE192D401AB61 \
 	&& apt-get update \
 	&& apt-get install --no-install-recommends -y --force-yes \

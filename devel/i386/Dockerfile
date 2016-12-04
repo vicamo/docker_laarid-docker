@@ -1,3 +1,4 @@
+# DO NOT EDIT!!! GENERATED FROM Dockerfile.template.
 FROM vicamo/buildpack-deps:stretch-i386
 
 ENV LAARID_USER=laarid
