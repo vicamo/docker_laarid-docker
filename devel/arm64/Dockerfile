@@ -18,13 +18,19 @@ RUN apt-get update -qq \
 		libfile-fcntllock-perl \
 		lintian \
 		sudo \
-	&& (echo "deb https://dl.bintray.com/laarid/main stretch main" | tee /etc/apt/sources.list.d/bintray.list) \
-	&& apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 379CE192D401AB61 \
-	&& apt-get update -qq \
-	&& apt-get install --no-install-recommends -y --allow-unauthenticated \
-		libbionic0-dev \
 	&& apt-get clean \
 	&& rm -f /var/lib/apt/lists/*_dists_*
+
+# Don't install any packages from bintray now. Error: "Insufficient
+# information available to perform this download securely".
+#
+# RUN (echo "deb https://dl.bintray.com/laarid/main stretch main" | tee /etc/apt/sources.list.d/bintray.list) \
+# 	&& apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 379CE192D401AB61 \
+# 	&& apt-get update -qq \
+# 	&& apt-get install --no-install-recommends -y --allow-unauthenticated
+# 		libbionic0-dev \
+# 	&& apt-get clean \
+# 	&& rm -f /var/lib/apt/lists/*_dists_*
 
 RUN useradd --comment 'LAARiD Development Account' \
 		--home ${LAARID_HOME} --create-home \
