@@ -1,0 +1,35 @@
+sudo: required
+services:
+- docker
+
+env:
+  matrix:
+  - ARCH=amd64
+  - ARCH=arm64
+  - ARCH=armel
+  - ARCH=armhf
+  - ARCH=i386
+  - ARCH=mips
+  - ARCH=mips64el
+  - ARCH=mipsel
+  - ARCH=ppc64el
+  - ARCH=s390x
+  global:
+    secure: SHPeXHefjc6oOdX0p6/NFXnMfvg8it5htQSerScKGQgp6YTUPr0tLyUpXqsQzR5jW5GU58n6dWGa9SR9+ziD9W4vlbG9aTEB6yFBxmyf4Zc8t0QyKL/xesVMa84dtVomiF79iDq95GwuLBgKhDioLMAkyTqQXBDhFuTrGccy/HSyYAnYpTgH8TtiZL4wj8X3znh8cQfocz7r5mL+rS4ypgqbEi/7dabZxTsU7wPm1gUWcXaxzGmDjkIYtF1SQDb0JHP5pr2LjUnitBpqoL56E157brPxkinN818ymNrDIy1V+Lop25RU9u5euoOfbGFW6mMDTRWOLak+GPPHHdSWUsW3lXHrgQeg552El7bOofIebTuyWNv3jQH7ytB6r7Bc4RQXFonzy3VKzrG+iVodHRa1/q8F8AlR/tK/Xp4SqK+8vwtZOmaJ2zAi9www9yzTGINAp+pqTFsYDDcSpnlizUvk+1x8D2uRfe2oZpky5890gdbHbEWA/iOQ8sZiNA0TTrq7iuxCR4vz2ZA8Kv2DqXMjOOUZzAREwPdeeHbqM4b/MxFVZUm55oopEcgZXFlyeMbCu+6NfdGZIZKmv32xSu4sLXf4U45o4BTyqL5z1KcziXweqeYo34qXNnmUoNWZ1E+VrQPmlp9apFDEfhQ9Rq0+2SbclRqjQgcG7pMds14=
+
+branches:
+  only: master
+
+before_install:
+- echo "deb http://archive.ubuntu.com/ubuntu/ devel universe" | sudo tee /etc/apt/sources.list.d/devel-universe.list
+- sudo apt-get update -qq
+- sudo apt-get install --no-install-recommends qemu-user-static binfmt-support
+
+script:
+- docker build -t laarid/devel:$ARCH devel/$ARCH
+
+after_success:
+- if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
+  docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD";
+  docker push laarid/devel:$ARCH;
+  fi
