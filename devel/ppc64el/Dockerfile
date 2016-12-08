@@ -5,6 +5,7 @@ ENV LAARID_USER=laarid
 ENV LAARID_HOME=/home/${LAARID_USER}
 
 RUN apt-get update -qq \
+	&& apt-get upgrade -y \
 	&& apt-get install --no-install-recommends -y \
 		apt-transport-https \
 		autoconf-archive \
