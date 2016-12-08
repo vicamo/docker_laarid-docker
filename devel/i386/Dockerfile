@@ -9,6 +9,7 @@ RUN apt-get update -qq \
 		apt-transport-https \
 		autoconf-archive \
 		autopoint \
+		build-essential \
 		ccache \
 		devscripts \
 		dh-autoreconf \
