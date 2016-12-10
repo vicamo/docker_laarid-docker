@@ -23,16 +23,17 @@ RUN apt-get update -qq \
 	&& apt-get clean \
 	&& rm -f /var/lib/apt/lists/*_dists_*
 
-# Don't install any packages from bintray now. Error: "Insufficient
-# information available to perform this download securely".
+# Hard code DNS entries for mips/mipsel.
+# See https://github.com/laarid/docker/issues/12
+RUN (echo "deb [allow-insecure=yes] https://dl.bintray.com/laarid/main @IMAGE_SUITE@ main" | tee /etc/apt/sources.list.d/bintray.list) \
+	&& (echo "75.126.118.188 dl.bintray.com" | tee -a /etc/hosts) \
+	&& apt-get update -qq \
+	&& rm -f /var/lib/apt/lists/*_dists_*
+
+# Cannot fetch key on mips/mipsel.
+# See https://github.com/laarid/docker/issues/11
 #
-# RUN (echo "deb https://dl.bintray.com/laarid/main @IMAGE_SUITE@ main" | tee /etc/apt/sources.list.d/bintray.list) \
-# 	&& apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 379CE192D401AB61 \
-# 	&& apt-get update -qq \
-# 	&& apt-get install --no-install-recommends -y --allow-unauthenticated
-# 		libbionic0-dev \
-# 	&& apt-get clean \
-# 	&& rm -f /var/lib/apt/lists/*_dists_*
+# 	&& apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 379CE192D401AB61
 
 RUN useradd --comment 'LAARiD Development Account' \
 		--home ${LAARID_HOME} --create-home \
