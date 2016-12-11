@@ -37,3 +37,8 @@ after_success:
   docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD";
   docker push laarid/devel:$ARCH;
   fi
+
+notifications:
+  slack:
+    rooms:
+    - secure: "AqxV+PQXnDuLA4jeduqPoFWMTm78CyI3+uGf0aB3YQeZw9vjcM5W7TzozH3MjRnw5JkWxyZGULZJkqklZXRnmJf8ify+6dsd2NeEKB8SEiMwrjaRLwc4/roVCArEJyhhU2o0ZvK/iQitoaC6PBhPcTiockv2eNj7Eqw1krdwnFEwDQ5Qn5ehr6EkjuUd8VdqaUMs/kIGNv7I67Ahg1/a2CHU8W8MmO00B6uZ0UAIDdJhSn5YFNr9wseSKlFXP2aQ9nmyC17q24HMk5rVkkts45Kzp102CPrh9ycZqBsKJjsxUqxfYq2DAq/Tk24AzWKNZQMM1jpwPqom/Tl580TtvfDC1E50LBUtEZweE9dIOtMKQ97TFa/hWrm5l+B4dX9rN8Yy9ifGsxhNmF0PWR8Hj3+kJh4pjfCdGQsvb2OLM30yWSU/SAkAlwZUjeTWvsQ9WVlI8130ltW47AgSfCVwx3inCMZie/fpnpjLBTKIrzpsf6dRvkVRtUIKq3YrpDsmMF7dp/2tj+rDKnq18bHDyPFy9QS0Gls6pIUlKxJZJMXUK/lB3MjC6ByB2kYv+P6Iugt8/F3U2YA8VqrB0QcZpZqxlPGj7awvJqxO6G4i3AEEfpN/KSAPXnx7VKUwLVMmKogKo6P7aQxgIGofo/r/qfRSD2+Qa4HRPolHXmRUvKA="
