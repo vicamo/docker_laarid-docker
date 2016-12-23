@@ -16,7 +16,7 @@ env:
   - ARCH=ppc64el
   - ARCH=s390x
   global:
-    secure: SHPeXHefjc6oOdX0p6/NFXnMfvg8it5htQSerScKGQgp6YTUPr0tLyUpXqsQzR5jW5GU58n6dWGa9SR9+ziD9W4vlbG9aTEB6yFBxmyf4Zc8t0QyKL/xesVMa84dtVomiF79iDq95GwuLBgKhDioLMAkyTqQXBDhFuTrGccy/HSyYAnYpTgH8TtiZL4wj8X3znh8cQfocz7r5mL+rS4ypgqbEi/7dabZxTsU7wPm1gUWcXaxzGmDjkIYtF1SQDb0JHP5pr2LjUnitBpqoL56E157brPxkinN818ymNrDIy1V+Lop25RU9u5euoOfbGFW6mMDTRWOLak+GPPHHdSWUsW3lXHrgQeg552El7bOofIebTuyWNv3jQH7ytB6r7Bc4RQXFonzy3VKzrG+iVodHRa1/q8F8AlR/tK/Xp4SqK+8vwtZOmaJ2zAi9www9yzTGINAp+pqTFsYDDcSpnlizUvk+1x8D2uRfe2oZpky5890gdbHbEWA/iOQ8sZiNA0TTrq7iuxCR4vz2ZA8Kv2DqXMjOOUZzAREwPdeeHbqM4b/MxFVZUm55oopEcgZXFlyeMbCu+6NfdGZIZKmv32xSu4sLXf4U45o4BTyqL5z1KcziXweqeYo34qXNnmUoNWZ1E+VrQPmlp9apFDEfhQ9Rq0+2SbclRqjQgcG7pMds14=
+    secure: "abqIwyPa3Zed8sJymFYeJkS9Ft3z8DXBs7h0f9c+/8PDxicJd6vo9nczAgWPpjzsMUxXZLG2yom0CmABAt9k6Gb8omuGnR8bDCBENzCnoJjrlIoL2XIR1x51lMrihjlgJ3nuOXWBHScIBCkyT+JCvA206gVoLgx1ueXfLfIrhZSHTB2k6cwvhoXlsC/Gxny2t4waJObC7Pa8Mk0zzCvl5R7VJZzpO17cWVcbX2Wa9rx2Kw3s+wVSm8tC5hFHeE86ZQlrBIbf+JTWf/v9gX3yWOvhEYMM0zTKH6XETDFkcvB9oZPlqW5YvGabaZ7snrwTkvKG9K3eNYJLo+1hHQ8sHyxSQFTImSoeugI4DtRZh92vRL4r7PlvvZHA1m+U/CuJhtv7J9xanI2pRrnYDy7QttXzZBZcrKAt1E3J1IUsHCTvPPcxG560JxsHGtBgW00uhfZO98QntxGKy3c83f057NM4bI2Cv3YaGW7bFsn3Sd8t2N87HZxvZLQ+ym+ON04KdyOoJEjcDDBsyFvd62zpTvZfiD4Co3X3hUD4R2JaCoiTtY27TlEbeLnmrf0C8mZe2a0lx+InlcSUp5/s+GQ48S9qCI7SyOnZB2UkYGK+3ObXeqtbP9D9poJf+LAm2nZQB5rlarXAlOp4P14TbZvQZ+lZbNCCpL3PPgYzdp9fHB4="
 
 branches:
   only: master
@@ -34,7 +34,7 @@ script:
 
 after_success:
 - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
-  docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD";
+  docker login -u "$DOCKER_USER" -p "$DOCKER_PASS";
   docker push laarid/devel:$ARCH;
   fi
 
