@@ -16,8 +16,7 @@ env:
   - ARCH=ppc64el
   - ARCH=s390x
   global:
-  - secure: q+2qb8V67SaryrU8AXNpwYIu9VjoCo0DwBMKpeAK16OxMrwphBJ4uxR2MQ/7SEXYRUt2qaev+2arKqTm737eUA+QC4SyXrJ1GH/M0C3a8h3VQwHpVYklt44s2mcDlFZqEDrwLioRkV/n0Rh/jsTTBW6QadMRmE2UTK/klb0Kba/793EIrL/eeY8Y1F7QXHHn3vzSWwBIoHL1e1GAq2CT4i0khT/hwR2vxo73Z4A14AU8QOL9/HOkrRWqjbe0pY6xXAwm9wOb7PZAKTcdidJuNmn6zkfKRVoJivXC2kNdaqsriSPBqTOSp7MZWVZQWZUV/VKLgHTqs2pt1tlzNzy5FWGDkqOKJoe0ijeRyffof5ZiC0HUDTXGGak8ZYhCXohHlFRftUFLEdnrtcVPYr32FGhFKqUHJ7a7rO7lrQXBnBF+LJEnVZeambZTx3cEOgMXyMG6wB86WyHKODg7dpG7qXW/lG42KwDaE6f8roC9rnaZ3fdkKzJGpUtv4FeITW+s7+WD/Ce5rhpa97K4gA38rMsHmj26Pvb0fdEz/1YB+n8luLQs3oEvtFo+oWj4lpAB8jFgf83Syy8s/Ngbbeva93jBE2vJut4XUAU9GgT1tvPNv2lDdghbfkIkgvGzLIELHtJzoWK+HaLUwL11/c59ALWZgI6ZpdpoWUMFwUgjGcY=
-  - DOCKER_REPO=vicamo/laarid-docker
+  - secure: "onefq5/LViBMhR+HpeKNPqTU07WoC/2CYHwnoV324nMSB6RS2HSKIo+k4SpZesuCbP5jeSrjgTMNzfSaqPZY3pa3K1UW9ILZCxIMKv46LsRyr4k2QyNVic9RgcG/J2XX3n2XK4kF3BFGCw1XPzZOhIK7nUeUjlFe1Mqks8o+eOHmQcMlqj2RkPlIQXbWuHr0WDRYG87hjPmX9ZeVFE/GIjjDv23hR7add84WZ9tAAFxP7G0Zo/24PC8Cqzgn5l5qYB8R/97HAlWsm/lP3K0j9fu1wvIx64/wGi/S/f+UJVbj+M8ut00rZJaIyQ1nebvU2WV0ozGztlBpskGklYBD14xjgkuWAdlTxdncBLzyPImGBBE5k70EYoO2T5Gf8fN+t6/MH1q7GsDEHTT27ePdupT8FgancsQc749eogySNaoECaYm7kY3D4hwpjP+41azTuJp+PRrc8yTmdXxqQ35yFErIL1ONmOE32FnlEu2H4AE8FWFr+kEY8ldAhOcdociQfN7+J3bgzc7+j9vtZ2eo/rF9H9OqlCCt5QbgaFU4/s/3qRh2aRuNoRIeTiO56mRpKBGTsyvn/6Que/EuZUqpnINa696k+mLvDo5UfELSex5XzDkmhjs02+BQEwSBqxB4TyFIXjvhaAcWWqQu3GcBemEKExh8VPu8Iknk6BuulQ="
 
 branches:
   only: personal
@@ -31,10 +30,10 @@ addons:
     - qemu-user-static
 
 script:
-- docker build -t ${DOCKER_REPO}:$ARCH devel/$ARCH
+- docker build -t ${DOCKER_USER}/${DOCKER_REPO}:$ARCH devel/$ARCH
 
 after_success:
 - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
-  docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD";
-  docker push ${DOCKER_REPO}:$ARCH;
+  docker login -u "$DOCKER_USER" -p "$DOCKER_PASS";
+  docker push ${DOCKER_USER}/${DOCKER_REPO}:$ARCH;
   fi
