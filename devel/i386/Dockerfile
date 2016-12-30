@@ -16,8 +16,10 @@ RUN apt-get update -qq \
 		dh-autoreconf \
 		dirmngr \
 		equivs \
+		google-mock \
 		gnupg \
 		libfile-fcntllock-perl \
+		libgtest-dev \
 		lintian \
 		sudo \
 	&& apt-get clean \
