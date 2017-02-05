@@ -14,11 +14,12 @@ RUN apt-get update -qq \
 		devscripts \
 		equivs \
 		git \
-		google-mock \
 		libfile-fcntllock-perl \
-		libgtest-dev \
 		lintian \
 		sudo \
+	&& apt-get install --no-install-recommends -y \
+		google-mock \
+		libgtest-dev \
 	&& apt-get clean \
 	&& rm -f /var/lib/apt/lists/*_dists_*
 
