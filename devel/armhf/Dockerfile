@@ -8,6 +8,4 @@ RUN sudo apt-get update -qq \
 		man-db \
 		manpages-dev \
 		time \
-		vim \
-	&& sudo apt-get clean \
-	&& sudo rm -f /var/lib/apt/lists/*_dists_*
+		vim
