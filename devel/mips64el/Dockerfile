@@ -19,16 +19,13 @@ RUN apt-get update -qq \
 		sudo \
 	&& apt-get install --no-install-recommends -y \
 		google-mock \
-		libgtest-dev \
-	&& apt-get clean \
-	&& rm -f /var/lib/apt/lists/*_dists_*
+		libgtest-dev
 
 # Hard code DNS entries for mips/mipsel.
 # See https://github.com/laarid/docker/issues/12
 RUN (echo "deb [allow-insecure=yes] https://dl.bintray.com/laarid/main stretch main" | tee /etc/apt/sources.list.d/bintray.list) \
 	&& (echo "75.126.118.188 dl.bintray.com" | tee -a /etc/hosts) \
-	&& apt-get update -qq \
-	&& rm -f /var/lib/apt/lists/*_dists_*
+	&& apt-get update -qq
 
 # Cannot fetch key on mips/mipsel.
 # See https://github.com/laarid/docker/issues/11
