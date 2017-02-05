@@ -1,5 +1,5 @@
 # DO NOT EDIT!!! GENERATED FROM Dockerfile.template.
-FROM vicamo/buildpack-deps:stretch-armel
+FROM vicamo/debian:stretch-armel
 
 ENV LAARID_USER=laarid
 ENV LAARID_HOME=/home/${LAARID_USER}
@@ -8,16 +8,13 @@ RUN apt-get update -qq \
 	&& apt-get upgrade -y \
 	&& apt-get install --no-install-recommends -y \
 		apt-transport-https \
-		autoconf-archive \
-		autopoint \
 		build-essential \
+		ca-certificates \
 		ccache \
 		devscripts \
-		dh-autoreconf \
-		dirmngr \
 		equivs \
+		git \
 		google-mock \
-		gnupg \
 		libfile-fcntllock-perl \
 		libgtest-dev \
 		lintian \
