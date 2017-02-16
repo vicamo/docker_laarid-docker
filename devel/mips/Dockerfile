@@ -21,7 +21,7 @@ RUN apt-get update -qq \
 		google-mock \
 		libgtest-dev
 
-RUN (echo "deb [allow-insecure=yes] https://dl.bintray.com/laarid/main stretch main" | tee /etc/apt/sources.list.d/bintray.list) \
+RUN (echo "deb [allow-insecure=yes] http://dl.bintray.com/laarid/main stretch main" | tee /etc/apt/sources.list.d/bintray.list) \
 	&& apt-get update -qq
 
 # Cannot fetch key on mips/mipsel.
