@@ -16,10 +16,7 @@ RUN apt-get update -qq \
 		git \
 		libfile-fcntllock-perl \
 		lintian \
-		sudo \
-	&& apt-get install --no-install-recommends -y \
-		google-mock \
-		libgtest-dev
+		sudo
 
 RUN (echo "deb [allow-insecure=yes] http://dl.bintray.com/laarid/main stretch main" | tee /etc/apt/sources.list.d/bintray.list) \
 	&& apt-get update -qq
