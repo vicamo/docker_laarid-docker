@@ -37,7 +37,7 @@ addons:
 
 script:
 - dpkg -s qemu-user-static
-- docker build -t laarid/devel:$ARCH devel/$ARCH
+- docker build -t laarid/devel:$ARCH $ARCH
 - O=$(docker run --rm laarid/devel:$ARCH /bin/bash -c 'ls /usr/bin/qemu-*');
   if [ -n "$O" ]; then
     docker run --rm laarid/devel:$ARCH $O --version;
