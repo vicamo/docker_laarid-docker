@@ -16,7 +16,8 @@ env:
   - JOB_ARCH=ppc64el
   - JOB_ARCH=s390x
   global:
-    secure: "abqIwyPa3Zed8sJymFYeJkS9Ft3z8DXBs7h0f9c+/8PDxicJd6vo9nczAgWPpjzsMUxXZLG2yom0CmABAt9k6Gb8omuGnR8bDCBENzCnoJjrlIoL2XIR1x51lMrihjlgJ3nuOXWBHScIBCkyT+JCvA206gVoLgx1ueXfLfIrhZSHTB2k6cwvhoXlsC/Gxny2t4waJObC7Pa8Mk0zzCvl5R7VJZzpO17cWVcbX2Wa9rx2Kw3s+wVSm8tC5hFHeE86ZQlrBIbf+JTWf/v9gX3yWOvhEYMM0zTKH6XETDFkcvB9oZPlqW5YvGabaZ7snrwTkvKG9K3eNYJLo+1hHQ8sHyxSQFTImSoeugI4DtRZh92vRL4r7PlvvZHA1m+U/CuJhtv7J9xanI2pRrnYDy7QttXzZBZcrKAt1E3J1IUsHCTvPPcxG560JxsHGtBgW00uhfZO98QntxGKy3c83f057NM4bI2Cv3YaGW7bFsn3Sd8t2N87HZxvZLQ+ym+ON04KdyOoJEjcDDBsyFvd62zpTvZfiD4Co3X3hUD4R2JaCoiTtY27TlEbeLnmrf0C8mZe2a0lx+InlcSUp5/s+GQ48S9qCI7SyOnZB2UkYGK+3ObXeqtbP9D9poJf+LAm2nZQB5rlarXAlOp4P14TbZvQZ+lZbNCCpL3PPgYzdp9fHB4="
+  - DOCKER_EXEC="sudo docker exec test_container"
+  - secure: "abqIwyPa3Zed8sJymFYeJkS9Ft3z8DXBs7h0f9c+/8PDxicJd6vo9nczAgWPpjzsMUxXZLG2yom0CmABAt9k6Gb8omuGnR8bDCBENzCnoJjrlIoL2XIR1x51lMrihjlgJ3nuOXWBHScIBCkyT+JCvA206gVoLgx1ueXfLfIrhZSHTB2k6cwvhoXlsC/Gxny2t4waJObC7Pa8Mk0zzCvl5R7VJZzpO17cWVcbX2Wa9rx2Kw3s+wVSm8tC5hFHeE86ZQlrBIbf+JTWf/v9gX3yWOvhEYMM0zTKH6XETDFkcvB9oZPlqW5YvGabaZ7snrwTkvKG9K3eNYJLo+1hHQ8sHyxSQFTImSoeugI4DtRZh92vRL4r7PlvvZHA1m+U/CuJhtv7J9xanI2pRrnYDy7QttXzZBZcrKAt1E3J1IUsHCTvPPcxG560JxsHGtBgW00uhfZO98QntxGKy3c83f057NM4bI2Cv3YaGW7bFsn3Sd8t2N87HZxvZLQ+ym+ON04KdyOoJEjcDDBsyFvd62zpTvZfiD4Co3X3hUD4R2JaCoiTtY27TlEbeLnmrf0C8mZe2a0lx+InlcSUp5/s+GQ48S9qCI7SyOnZB2UkYGK+3ObXeqtbP9D9poJf+LAm2nZQB5rlarXAlOp4P14TbZvQZ+lZbNCCpL3PPgYzdp9fHB4="
 
 branches:
   only: master
@@ -30,20 +31,22 @@ addons:
     - qemu-user-static
 
 script:
-- dpkg -s qemu-user-static
 - docker build -t laarid/devel:${JOB_ARCH} ${JOB_ARCH}
-- O=$(docker run --rm laarid/devel:${JOB_ARCH} /bin/bash -c 'ls /usr/bin/qemu-*');
-  if [ -n "$O" ]; then
-    docker run --rm laarid/devel:${JOB_ARCH} $O --version;
-  fi
+- git clone -o laarid https://github.com/laarid/package_android-bionic.git test
 - |
-  git clone -o laarid https://github.com/laarid/package_laarid-meta.git \
-    ${TRAVIS_BUILD_DIR%${TRAVIS_REPO_SLUG}}/laarid-meta;
-  docker run --rm \
+  sudo docker run --detach --tty \
+    --name test_container \
     --volume ${TRAVIS_BUILD_DIR%${TRAVIS_REPO_SLUG}}:${TRAVIS_BUILD_DIR%${TRAVIS_REPO_SLUG}} \
-    --workdir ${TRAVIS_BUILD_DIR%${TRAVIS_REPO_SLUG}}/laarid-meta \
+    --workdir ${TRAVIS_BUILD_DIR}/test \
+    --add-host dl.bintray.com:$(nslookup dl.bintray.com | grep -m1 -A1 Name: | grep Address: | awk '{print $2}') \
     laarid/devel:${JOB_ARCH} \
-    debuild -i -us -uc -b
+    /bin/bash
+- ${DOCKER_EXEC} mk-build-deps
+    --host-arch ${JOB_ARCH}
+    --install --remove
+    --root-cmd sudo
+    --tool 'apt-get -o Debug::pkgProblemResolver=yes --no-install-recommends -y'
+- ${DOCKER_EXEC} dpkg-buildpackage --host-arch ${JOB_ARCH} -i -us -uc -b
 
 after_success:
 - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
