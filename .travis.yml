@@ -5,16 +5,16 @@ services:
 
 env:
   matrix:
-  - ARCH=amd64
-  - ARCH=arm64
-  - ARCH=armel
-  - ARCH=armhf
-  - ARCH=i386
-  - ARCH=mips
-  - ARCH=mips64el
-  - ARCH=mipsel
-  - ARCH=ppc64el
-  - ARCH=s390x
+  - JOB_ARCH=amd64
+  - JOB_ARCH=arm64
+  - JOB_ARCH=armel
+  - JOB_ARCH=armhf
+  - JOB_ARCH=i386
+  - JOB_ARCH=mips
+  - JOB_ARCH=mips64el
+  - JOB_ARCH=mipsel
+  - JOB_ARCH=ppc64el
+  - JOB_ARCH=s390x
   global:
   - secure: "onefq5/LViBMhR+HpeKNPqTU07WoC/2CYHwnoV324nMSB6RS2HSKIo+k4SpZesuCbP5jeSrjgTMNzfSaqPZY3pa3K1UW9ILZCxIMKv46LsRyr4k2QyNVic9RgcG/J2XX3n2XK4kF3BFGCw1XPzZOhIK7nUeUjlFe1Mqks8o+eOHmQcMlqj2RkPlIQXbWuHr0WDRYG87hjPmX9ZeVFE/GIjjDv23hR7add84WZ9tAAFxP7G0Zo/24PC8Cqzgn5l5qYB8R/97HAlWsm/lP3K0j9fu1wvIx64/wGi/S/f+UJVbj+M8ut00rZJaIyQ1nebvU2WV0ozGztlBpskGklYBD14xjgkuWAdlTxdncBLzyPImGBBE5k70EYoO2T5Gf8fN+t6/MH1q7GsDEHTT27ePdupT8FgancsQc749eogySNaoECaYm7kY3D4hwpjP+41azTuJp+PRrc8yTmdXxqQ35yFErIL1ONmOE32FnlEu2H4AE8FWFr+kEY8ldAhOcdociQfN7+J3bgzc7+j9vtZ2eo/rF9H9OqlCCt5QbgaFU4/s/3qRh2aRuNoRIeTiO56mRpKBGTsyvn/6Que/EuZUqpnINa696k+mLvDo5UfELSex5XzDkmhjs02+BQEwSBqxB4TyFIXjvhaAcWWqQu3GcBemEKExh8VPu8Iknk6BuulQ="
 
@@ -30,10 +30,10 @@ addons:
     - qemu-user-static
 
 script:
-- docker build -t ${DOCKER_USER}/${DOCKER_REPO}:$ARCH devel/$ARCH
+- docker build -t ${DOCKER_USER}/${DOCKER_REPO}:${JOB_ARCH} ${JOB_ARCH}
 
 after_success:
 - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
-  docker login -u "$DOCKER_USER" -p "$DOCKER_PASS";
-  docker push ${DOCKER_USER}/${DOCKER_REPO}:$ARCH;
+    docker login -u "$DOCKER_USER" -p "$DOCKER_PASS";
+    docker push ${DOCKER_USER}/${DOCKER_REPO}:${JOB_ARCH};
   fi
